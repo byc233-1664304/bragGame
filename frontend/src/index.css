@@ -1,0 +1,528 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .hpbg{
+        position: relative;
+        overflow: hidden;
+    }
+
+    .authbox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 21rem;
+        height: 27rem;
+        background-color: #FDF9EE80;
+        border-radius: 25px;
+    }
+
+    .authbox > h2 {
+        text-align: center;
+        margin-top: 3rem;
+        margin-bottom: 0;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+    }
+
+    #login-form > div{
+        display: table;
+        border-collapse: separate;
+        border-spacing: 1rem;
+        margin-top: 2rem;
+    }
+    
+    #register-form > div{
+        display: table;
+        border-collapse: separate;
+        border-spacing: 0.6rem;
+        margin-top: 0.7rem;
+    }
+    
+    #login-form > div > div, #register-form > div > div{
+        display: table-row;
+    }
+
+    #confirm-label{
+        display: table-row;
+    }
+    
+    #login-form > div > div > label, #login-form > div > div > input,
+            #register-form > div > div > label, #confirm-password{
+        display: table-cell;
+    }
+    
+    #register-form > div > div > div{
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 1rem;
+    }
+    
+    #login-form > div > div > label, #register-form > div > div > label, #confirm-label{
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 1rem;
+        color: #6C6076;
+    }
+
+    .authInput{
+        border: 0.1em solid #6C6076;
+        border-radius: 10px;
+        text-align: center;
+        color: #6C6076;
+    }
+    
+    #loginbutton, #registerbutton, #joinbutton{
+        position: relative;
+        margin-left: calc(50% - 3rem);
+        margin-top: 1.5rem;
+        width: 6rem;
+        height: 2rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+    
+    #loginbutton:hover, #registerbutton:hover, #joinbutton:hover{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+    
+    .authtips{
+        margin-top: 0.5rem;
+        text-align: center;
+        color: #6C6076;
+    }
+
+    .authlink{
+        text-decoration: none;
+        color: #3d6ea7;
+    }
+
+    .logoutbutton{
+        position: absolute;
+        top: 0.5rem;
+        right: 2rem;
+        color: #6C6076;
+    }
+
+    .backbutton{
+        position: absolute;
+        top: 0.5rem;
+        left: 2rem;
+        color:#6C6076;
+    }
+
+    #userbox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #userinfo{
+        text-align: center;
+        color: #6C6076;
+    }
+
+    .profilepic{
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+    }
+
+    .mainButton{
+        margin-top: 1.5rem;
+        width: 15rem;
+        height: 4rem;
+        font-size: 1.5rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .mainButton:hover{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+
+    .profileContent{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+    .uploadProfile{
+        display: contents;
+        position: relative;
+    }
+
+    .uploadProfile > input{
+        margin-top: 0.5rem;
+        margin-left: 5rem;
+    }
+
+    .uploadProfile > input::-webkit-file-upload-button{
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+
+    .uploadProfile > input::before{
+        content: "Upload Profile Picture";
+        display: inline-block;
+        background-color: #6C607680;
+        color: white;
+        border-radius: 10px;
+        outline: none;
+        white-space: nowrap;
+        cursor: pointer;
+        width: 11rem;
+        height: 1.5rem;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .uploadProfile > input:hover::before{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+
+    #username{
+        margin-top: 1.5rem;
+        width: fit-content;
+        background-color: transparent;
+    }
+
+    #saveProfile{
+        position: relative;
+        margin-top: 1.5rem;
+        width: 6rem;
+        height: 2rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    #saveProfile:hover{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+
+    #joinRoomBox{
+        margin-top: 4.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #joinRoomBox > div{
+        display: flex;
+        flex-direction: row;
+    }
+
+    #roomIdDisplay{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 2%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #roomIdInput{
+        border:solid #6C607680;
+        border-radius: 10px;
+    }
+
+    #pasteIcon{
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    #copyIcon{
+        height: 1.5rem;
+        width: 1.5rem;
+        margin-left: 0.5rem;
+    }
+
+    #chatBox{
+        position: absolute;
+        right: 0.5rem;
+        bottom: 0.5rem;
+        height: 15rem;
+        width: 20rem;
+        background-color: #FDF9EE80;
+        border-radius: 25px;
+    }
+
+    #chatHistory{
+        height: 90%;
+        overflow: auto;
+    }
+
+    #chatContent, #usersContent{
+        position: relative;
+    }
+
+    .message{
+        margin-left: 1rem;
+    }
+
+    #msgInput{
+        position: absolute;
+        border:solid #6C607680;
+        border-radius: 10px;
+        left: 0.5rem;
+        width: 15.5rem;
+    }
+
+    #sendInput > button {
+        position: absolute;
+        right: 0;
+        width: 3.5rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    #roomUsers{
+        position: absolute;
+        top: 10%;
+        left: 2%;
+        height: 80%;
+        width: 6rem;
+    }
+
+    .roomProfilepic{
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        margin-bottom: 1rem;
+    }
+
+    #startButton{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .waitingMsg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+    }
+
+    #resultTitle{
+        position: absolute;
+        left: calc(5% + 6rem);
+        bottom: calc(5% + 6rem);
+    }
+
+    #diceBox{
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 5rem;
+        left: calc(5% + 6rem);
+        bottom: 5%;
+    }
+
+    #choiceBox, #resBox{
+        display: flex;
+        flex-direction: row;
+        height: 5rem;
+    }
+
+    #manipulate{
+        position: absolute;
+        top: 30%;
+        left: calc(20% + 6rem);
+    }
+
+    #callBox{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1.5rem;
+    }
+
+    #callBox > input{
+        margin-left: 1rem;
+        width: 4rem;
+        border: 0.1em solid #6C6076;
+        border-radius: 10px;
+        text-align: center;
+        color: #6C6076;
+        &::-webkit-inner-spin-button {
+            opacity: 1;
+            background: red;
+        }
+    }
+
+    #callButton{
+        margin-top: 1.5rem;
+        margin-left: 13rem;
+        width: 6rem;
+        height: 2rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    #callButton:hover{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+
+    #waitingCall{
+        position: absolute;
+        top: 35%;
+        left: calc(20% + 6rem);
+        text-align: center;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+    }
+
+    #resContent{
+        position: absolute;
+        top: 20%;
+        left: calc(5% + 6rem);
+    }
+
+    #lastCallWithButton{
+        display: flex;
+        flex-direction: row;
+    }
+
+    #lastCallBox{
+        position: absolute;
+        top: 30%;
+        left: calc(20% + 6rem);
+    }
+
+    #lastCallRes{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #lastCallNum {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+    }
+
+    #lastCallS{
+        margin-left: 0.2rem;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+    }
+
+    #openbutton{
+        margin-top: 3rem;
+        margin-left: 4rem;
+        width: 6rem;
+        height: 2rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    #openbutton:hover, #nextRound:hover, #endGame:hover{
+        color: #5d6c7b;
+        background-color: #8897A780;
+    }
+
+    #lastCallAndChoice{
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 15%;
+        left: calc(20% + 6rem);
+    }
+
+    #otherRes{
+        display: flex;
+        flex-direction: row;
+    }
+
+    #otherNames{
+        margin-top: 2rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    #endGameChoices{
+        position: absolute;
+        top: 20%;
+        left: 72%;
+        text-align: center;
+    }
+
+    #endGameChoices > div{
+        display: flex;
+        flex-direction: row;
+    }
+
+    #nextRound, #endGame{
+        margin-top: 2rem;
+        margin-left: 2rem;
+        width: 6rem;
+        height: 2rem;
+        color: white;
+        background-color: #6C607680;
+        border-radius: 10px;
+        border: none;
+    }
+
+    .winRes{
+        margin:0;
+        padding: 0;
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+        text-align: center;
+    }
+
+    #openCall{
+        position: absolute;
+        top: 7%;
+        right: calc(50% - 8rem);
+        font-family: 'Caveat', cursive;
+        font-size: 3rem;
+        color: #6C6076;
+        text-align: center;
+    }
+}
