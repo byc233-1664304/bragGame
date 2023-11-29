@@ -26,6 +26,10 @@ export function AuthProvider({ children }) {
         return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 localStorage.setItem("currentUser", JSON.stringify(userCredential.user));
+            })
+            .catch((error) => {
+                setError(error.message);
+                throw error;
             });
     }
 

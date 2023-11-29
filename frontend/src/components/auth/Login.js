@@ -23,12 +23,32 @@ export default function Login() {
         try {
             setError("");
             setLoading(true);
-            await login(email, password);
+            const userCredential = await login(email, password);
+
+            const user = userCredential.user;
+            const token = await user.getIdToken();
+
+            await sendTokenToServer(token);
+
             window.location.reload();
         } catch(e) {
             setError(e.message);
         }finally{
             setLoading(false);
+        }
+    }
+
+    async function sendTokenToServer(token) {
+        try{
+            await fetch('https://braggame-api.onrender.com/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+            });
+        }catch (error) {
+            console.error('Error sending token to server:', error);
         }
     }
 
