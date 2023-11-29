@@ -8,6 +8,7 @@ const normalizePort = require('normalize-port');
 
 // imports
 const verifyToken = require("./middleware/VerifyToken");
+const corsOptions = require("./config/corsOptions");
 const { setUsername, join, addRoom, getRoom, deleteRoom, getCurrentUser, getUsersInRoom, leave } = require("./middleware/roomManagement");
 const { newGame, updateGame, removeGame } = require("./middleware/gameManagement");
 
@@ -25,7 +26,7 @@ app.use(express());
 app.use(express.static(buildPath));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(verifyToken);
 
@@ -43,12 +44,7 @@ app.get('*', (req, res) => {
 
 const server = http.createServer(app);
 
-const io = socket(server, {
-    cors: {
-        origin: "https://braggame.onrender.com",
-        methods: ["GET", "POST"]
-    }
-});
+const io = socket(server);
 
 io.on("connection", (socket) => {
     console.log("socket connected");
