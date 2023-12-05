@@ -22,8 +22,8 @@ const portNumber = normalizePort(process.env.PORT_NUMBER || 8080);
 const buildPath = path.join(__dirname, "build");
 
 // middleware
-app.use('/', express.static('/build'));
-app.use(express.static(buildPath));
+app.use(express());
+app.use('/', express.static(buildPath));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
 
 const server = http.createServer(app);
 
-const io = new Server(server);
+const io = socket(server);
 
 io.on("connection", (socket) => {
     console.log("socket connected");
