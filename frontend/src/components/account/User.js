@@ -64,7 +64,7 @@ export default function User({generateRoomId, socket}) {
 
             <div id="userbox">
                 <Link to="/profile">
-                    {profileURL? <img src={profileURL} alt="profilepic" className="profilepic" /> : <img src={process.env.REACT_APP_PUBLIC_URL + '/images/default-profile.jpeg'} alt="profilepic" className="profilepic" />}
+                    {profileURL? <img src={profileURL} alt="profilepic" className="profilepic" /> : <img src={process.env.PUBLIC_URL + '/images/default-profile.jpeg'} alt="profilepic" className="profilepic" />}
                 </Link>
                 <button className="mainButton" onClick={createRoom}>Create Room</button>
                 <Link to="/join">

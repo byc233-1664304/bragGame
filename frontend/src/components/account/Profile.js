@@ -117,7 +117,7 @@ export default function Profile({ socket }) {
       <button className="backbutton" onClick={handleBack}>Back</button>
       <div className="profileContent">
         <div className="uploadProfile">
-          {profileURL? <img src={profileURL} alt="profilepic" className="profilepic" /> : <img src={process.env.REACT_APP_PUBLIC_URL + '/images/default-profile.jpeg'} alt="profilepic" className="profilepic" />}
+          {profileURL? <img src={profileURL} alt="profilepic" className="profilepic" /> : <img src={process.env.PUBLIC_URL + '/images/default-profile.jpeg'} alt="profilepic" className="profilepic" />}
           <input type="file" onChange={handleFileChange} />
         </div>
 
