@@ -62,7 +62,7 @@ export default function Register() {
                     <button type="submit" id="registerbutton" disabled={loading}>Sign Up</button>
                 </form>
                 <div className="authtips">Already have an account?<br />
-                    <div className="authlink"><Link to="/">Sign in here!</Link></div>
+                    <div className="authlink"><Link to="/login">Sign in here!</Link></div>
                 </div>
             </div>
         </div>
