@@ -19,7 +19,7 @@ const express = require("express");
 const app = express();
 const portNumber = normalizePort(process.env.PORT_NUMBER || 8080);
 
-const buildPath = path.join(__dirname, "build");
+const buildPath = path.join(__dirname, 'frontend', 'build');
 
 // middleware
 app.use(express());
