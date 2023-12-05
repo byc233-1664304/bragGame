@@ -1,10 +1,10 @@
 // utils
 const process = require("process");
 const cors = require("cors");
-const socket = require("socket.io");
 const path = require("path");
 const http = require("http");
 const normalizePort = require('normalize-port');
+const { Server } = require('socket.io');
 
 // imports
 const verifyToken = require("./middleware/VerifyToken");
@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
 
 const server = http.createServer(app);
 
-const io = socket(server);
+const io = new Server(server);
 
 io.on("connection", (socket) => {
     console.log("socket connected");
