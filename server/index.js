@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const http = require("http");
 const normalizePort = require('normalize-port');
-const { Server } = require('socket.io');
+const socket = require('socket.io');
 
 // imports
 const verifyToken = require("./middleware/VerifyToken");
