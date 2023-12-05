@@ -37,7 +37,7 @@ export default function Login() {
             <div className="authbox">
                 <h2>Brag Game</h2>
 
-                <form id="login-form" method="post" action="/" onSubmit={handleFormSubmit}>
+                <form id="login-form" method="post" action="/login" onSubmit={handleFormSubmit}>
                     <div>
                         <div>
                             <label htmlFor="login-email">email: </label>
