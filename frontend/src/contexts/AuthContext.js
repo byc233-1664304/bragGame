@@ -1,5 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import auth from "../config/firebase";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
+} from "firebase/auth";
 
 const AuthContext = createContext();
 
@@ -13,16 +19,15 @@ export function AuthProvider({ children }) {
     const [error, setError] = useState("");
 
     function register(email, password) {
-        return auth
-                .createUserWithEmailAndPassword(auth, email, password)
-                .catch((error) => {
-                    setError(error.message);
-                    throw error;
-                });
+        return createUserWithEmailAndPassword(auth, email, password)
+            .catch((error) => {
+                setError(error.message);
+                throw error;
+            });
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(auth, email, password)
+        return signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 localStorage.setItem("currentUser", JSON.stringify(userCredential.user));
             })
@@ -35,11 +40,11 @@ export function AuthProvider({ children }) {
     function logout() {
         localStorage.removeItem("currentUser");
         setCurrentUser(null);
-        return auth.signOut(auth);
+        return signOut(auth);
     }
 
     function updateUserProfile(user, profile) {
-        return auth.updateProfile(user, profile);
+        return updateProfile(user, profile);
     }
 
     useEffect(() => {
