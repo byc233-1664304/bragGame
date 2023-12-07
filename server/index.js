@@ -5,6 +5,7 @@ const path = require("path");
 const http = require("http");
 const normalizePort = require('normalize-port');
 const socket = require('socket.io');
+const io = require("socket.io-client")
 
 // imports
 const verifyToken = require("./middleware/VerifyToken");
@@ -42,11 +43,13 @@ app.get('*', (req, res) => {
 //     }
 // });
 
-const server = http.createServer(app);
+const server = io("https://braggame-api.onrender.com", {
+    transports: ['websocket']
+});
 
-const io = socket(server);
+const socketio = socket(server);
 
-io.on("connection", (socket) => {
+socketio.on("connection", (socket) => {
     console.log("socket connected");
     socket.on("changeName", (username) => {
         setUsername(socket.id, username);
@@ -94,7 +97,7 @@ io.on("connection", (socket) => {
 
             console.log("innerRoomData", roomData);
             // send roomData to client side
-            io.to(curUser.roomId).emit("roomData", roomData);
+            socketio.to(curUser.roomId).emit("roomData", roomData);
         }
     });
 
@@ -104,10 +107,10 @@ io.on("connection", (socket) => {
         if(room) {
             // set roomData.inGame to true and send it to client side
             room.inGame = true;
-            io.to(roomId).emit("roomData", room);
+            socketio.to(roomId).emit("roomData", room);
 
             const game = newGame(roomId, lastLose);
-            io.to(roomId).emit("game", game);
+            socketio.to(roomId).emit("game", game);
         }
     });
 
@@ -115,7 +118,7 @@ io.on("connection", (socket) => {
     socket.on("game", (game) => {
         const curUser = getCurrentUser(socket.id);
         const updatedGame = updateGame(curUser.roomId, game);
-        io.to(curUser.roomId).emit("game", updatedGame);
+        socketio.to(curUser.roomId).emit("game", updatedGame);
     });
 
     socket.on("endGame", (roomId) => {
@@ -123,7 +126,7 @@ io.on("connection", (socket) => {
         if(room) {
             // set roomData.inGame to false and sned it to client side
             room.inGame = false;
-            io.to(roomId).emit("roomData", room);
+            socketio.to(roomId).emit("roomData", room);
 
             // delete game in data
             removeGame(roomId);
@@ -134,7 +137,7 @@ io.on("connection", (socket) => {
     socket.on("chat", (text) => {
         const curUser = getCurrentUser(socket.id);
 
-        io.to(curUser.roomId).emit("message", {
+        socketio.to(curUser.roomId).emit("message", {
             username: curUser.username,
             text: text,
             isCipher: true
@@ -143,7 +146,7 @@ io.on("connection", (socket) => {
 
     socket.on("called", (name) => {
         const curUser = getCurrentUser(socket.id);
-        io.to(curUser.roomId).emit("called", name);
+        socketio.to(curUser.roomId).emit("called", name);
     });
 
     // user leave the room
@@ -152,7 +155,7 @@ io.on("connection", (socket) => {
         if(curUser) {
             socket.leave(curUser.roomId);
             // message shows user leaving
-            io.to(curUser.roomId).emit("message", {
+            socketio.to(curUser.roomId).emit("message", {
                 username: "--- System",
                 text: `${curUser.username} has left the room ---`
             });
@@ -173,7 +176,7 @@ io.on("connection", (socket) => {
                 // update users in room
                 room.users = users;
 
-                io.to(curUser.roomId).emit("roomData", room);
+                socketio.to(curUser.roomId).emit("roomData", room);
             }
         }
     });
