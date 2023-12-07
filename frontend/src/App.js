@@ -14,7 +14,9 @@ import Background from "./components/layouts/Background";
 import ErrorMessage from "./components/layouts/ErrorMessage";
 import WithPrivateRoute from "./utils/WithPrivateRoute";
 
-const socket = io.connect("/");
+const socket = io("https://braggame-api.onrender.com", {
+  transports: ['websocket']
+});
 
 function App() {
   const generateRoomId = () => {

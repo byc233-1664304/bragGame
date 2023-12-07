@@ -85,24 +85,9 @@ export default function Profile({ socket }) {
         profile.photoURL = profileURL;
       }
 
-      const token = await user.getIdToken();
-
-      const response = await fetch('https://braggame-api.onrender.com/update-profile', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(profile),
-      });
-
-      if(response.ok) {
-        socket.emit("changeName", username);
-        await updateUserProfile(user, profile);
-        navigate("/");
-      }else {
-        setError(response.statusText);
-      }
+      socket.emit("changeName", username);
+      await updateUserProfile(user, profile);
+      navigate("/");
     } catch (e) {
       console.log(e);
       setError(e.message);
