@@ -47,6 +47,7 @@ export default function User({generateRoomId, socket}) {
 
         if(userId !== "" && roomId !== "") {
             socket.emit("joinRoom", { userId, roomId, username, isHost });
+            navigate("/room/" + roomId);
         }else if(userId === "") {
             setError("User is null");
             window.location.reload();
@@ -54,8 +55,6 @@ export default function User({generateRoomId, socket}) {
             setError("roomId is null");
             window.location.reload();
         }
-        
-        navigate("/room/" + roomId);
     }
 
     return (
