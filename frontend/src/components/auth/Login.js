@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function Login() {
+export default function Login(socket) {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -24,6 +24,7 @@ export default function Login() {
             setError("");
             setLoading(true);
             await login(email, password);
+            socket.connect();
         } catch(e) {
             setError(e.message);
         }finally{

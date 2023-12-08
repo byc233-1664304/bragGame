@@ -34,6 +34,7 @@ export default function User({generateRoomId, socket}) {
         try{
             setError("");
             await logout();
+            socket.disconnect();
             navigate("/login");
         }catch(e) {
             setError(e.message);

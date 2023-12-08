@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import io from "socket.io-client";
 
 import './index.css';
@@ -34,7 +34,7 @@ function App() {
         <ErrorMessage />
         <Routes>
           <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/login" element={<Login socket={socket}/>} />
           <Route exact path="/profile" element={
             <WithPrivateRoute>
               <Profile  socket={socket}/>
