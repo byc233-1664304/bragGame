@@ -17,7 +17,7 @@ function JoinRoom() {
         navigate("/");
     }
 
-    const handleJoinRoom = async () => {
+    const handleJoinRoom = () => {
         if(userId === ""){
             setError("You must be logged in to join a room");
             return;
@@ -30,38 +30,29 @@ function JoinRoom() {
 
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
-
-        try{
-            const roomData = await new Promise(resolve => {
-                socket.on("roomData", (data) => {
-                    resolve(data);
-                });
-            });
-
-            if(roomData.inGame) {
-                setError("Game as already started in this room.")
-            }else {
-                navigate("/room/" + roomId);
-            }
-        } catch(e) {
-            setError(e);
-        }
     }
 
     useEffect(() => {
         socket.connect();
-    }, []);
 
-    useEffect(() => {
         if(currentUser) {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);
         }
 
+        socket.on("roomData", (roomData) => {
+            if(roomData && roomData.inGame) {
+                setError("Game has already started in this room.");
+            } else if(roomData){
+                navigate("/room/" + roomId);
+            }
+        });
+
         return () => {
             socket.off("roomData");
-        }
-    }, [currentUser, setError]);
+        };
+
+    }, [currentUser, navigate, roomId, setError]);
 
     return (
         <div>
