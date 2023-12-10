@@ -31,23 +31,25 @@ function JoinRoom() {
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
 
-        socket.on("roomData", (roomData) => {
-            console.log(roomData);
+        const handleRoomData = (roomData) => {
             if(roomData && roomData.inGame) {
                 setError("Game has already started in this room.");
             } else if(roomData){
                 navigate("/room/" + roomId);
             }
-        });
+        }
+        socket.once("roomData", handleRoomData);
 
         return () => {
-            socket.off("roomData");
+            socket.off("roomData", handleRoomData);
         };
     }
 
     useEffect(() => {
         socket.connect();
+    }, []);
 
+    useEffect(() => {
         if(currentUser) {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);
