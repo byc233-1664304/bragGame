@@ -32,9 +32,6 @@ export default function Room() {
         socket.connect();
 
         const handleRoomData = async (roomData) => {
-            console.log("inside the handleRoomData");
-
-            console.log("roomData", roomData);
             setHostId(roomData.hostId);
             setInGame(roomData.inGame);
         

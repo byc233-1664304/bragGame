@@ -20,7 +20,7 @@ export const Game = ({ users, roomId, host }) => {
     const [lastUsername, setLastUsername] = useState("");
     const [opener, setOpener] = useState("");
 
-    const { currentUser } = useAuth();
+    const { currentUser, setError } = useAuth();
     const userIds = users.map(user => user.userId);
 
     useEffect(() => {
@@ -106,18 +106,23 @@ export const Game = ({ users, roomId, host }) => {
         setLastUsername(name);
         socket.emit("called", name);
 
-        setInTurn(nextTurn);
-        const gameInNextTurn = {
-            resultsForAll: resultsForAllArr,
-            inTurn: nextTurn,
-            lastCall: curCall,
-            LastLose: lastLose,
-            opened: opened,
-            winner: winner,
-            opener: opener
-        };
+        if(curCallRes === 0) {
+            setError("You have to select a dice to call.");
+            return;
+        }else {
+            setInTurn(nextTurn);
+            const gameInNextTurn = {
+                resultsForAll: resultsForAllArr,
+                inTurn: nextTurn,
+                lastCall: curCall,
+                LastLose: lastLose,
+                opened: opened,
+                winner: winner,
+                opener: opener
+            };
 
-        socket.emit("game", gameInNextTurn);
+            socket.emit("game", gameInNextTurn);
+        }
     }
 
     // return winner
