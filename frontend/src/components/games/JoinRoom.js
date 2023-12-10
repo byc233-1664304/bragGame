@@ -49,6 +49,8 @@ function JoinRoom() {
 
     useEffect(() => {
         socket.connect();
+
+        return () => {socket.disconnect();}
     });
 
     useEffect(() => {
