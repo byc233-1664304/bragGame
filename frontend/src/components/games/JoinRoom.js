@@ -32,19 +32,17 @@ function JoinRoom() {
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
 
-        await new Promise(resolve => {
-            socket.on("roomData", (roomData) => {
-                if(roomData && roomData.inGame) {
-                    setInGame(true);
-                    setError("Game as already started in this room.")
-                }else if(roomData) {
-                    setInGame(false);
-                }
-                resolve();
+        const roomData = await new Promise(resolve => {
+            socket.on("roomData", (data) => {
+                resolve(data);
             });
         });
 
-        if(!inGame) {
+        if(roomData && roomData.inGame) {
+            setInGame(true);
+            setError("Game as already started in this room.")
+        }else if(roomData) {
+            setInGame(false);
             navigate("/room/" + roomId);
         }
     }
