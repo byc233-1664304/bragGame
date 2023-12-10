@@ -30,17 +30,9 @@ function JoinRoom() {
 
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
-    }
-
-    useEffect(() => {
-        socket.connect();
-
-        if(currentUser) {
-            setUserId(currentUser.uid);
-            setUsername(currentUser.displayName);
-        }
 
         socket.on("roomData", (roomData) => {
+            console.log(roomData);
             if(roomData && roomData.inGame) {
                 setError("Game has already started in this room.");
             } else if(roomData){
@@ -51,8 +43,16 @@ function JoinRoom() {
         return () => {
             socket.off("roomData");
         };
+    }
 
-    }, [currentUser, navigate, roomId, setError]);
+    useEffect(() => {
+        socket.connect();
+
+        if(currentUser) {
+            setUserId(currentUser.uid);
+            setUsername(currentUser.displayName);
+        }
+    }, [currentUser]);
 
     return (
         <div>
