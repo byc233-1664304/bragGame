@@ -32,13 +32,15 @@ function JoinRoom() {
         socket.emit("joinRoom", { userId, roomId, username, isHost });
 
         const handleRoomData = (roomData) => {
-            if(roomData && roomData.inGame) {
-                setError("Game has already started in this room.");
-            } else if(roomData){
-                navigate("/room/" + roomId);
+            if(roomData) {
+                if(roomData.inGame) {
+                    setError("Game has already started in this room.");
+                } else {
+                    navigate("/room/" + roomId);
+                }
             }
         }
-        socket.once("roomData", handleRoomData);
+        socket.on("roomData", handleRoomData);
 
         return () => {
             socket.off("roomData", handleRoomData);
