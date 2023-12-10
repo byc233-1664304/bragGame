@@ -5,8 +5,9 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebase";
 import auth from "../../config/firebase";
 import { useAuth } from "../../contexts/AuthContext";
+import { socket } from "../../services/socket";
 
-export default function Profile({ socket }) {
+export default function Profile() {
   const navigate = useNavigate();
   const currentUser = auth.currentUser;
 
@@ -18,6 +19,8 @@ export default function Profile({ socket }) {
   const { logout, updateUserProfile, setError } = useAuth();
 
   useEffect(() => {
+    socket.connect();
+    
     if(currentUser) {
       const profilePicRef = ref(storage, 'profilePic/' + currentUser.uid + '.jpg')
 

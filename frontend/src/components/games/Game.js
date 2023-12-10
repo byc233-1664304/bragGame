@@ -25,7 +25,9 @@ export const Game = ({ users, roomId, host }) => {
 
     useEffect(() => {
         socket.connect();
+    }, []);
 
+    useEffect(() => {
         socket.on("game", (game) => {
             console.log("game", game);
             let tempRes = new Map();

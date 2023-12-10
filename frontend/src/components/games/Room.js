@@ -77,7 +77,9 @@ export default function Room() {
 
     useEffect(() => {
         socket.connect();
+    }, []);
 
+    useEffect(() => {
         socket.on("close", (event) => {
             console.error("WebSocket closed:", event);
         });

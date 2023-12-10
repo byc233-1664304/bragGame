@@ -39,7 +39,9 @@ function JoinRoom() {
 
     useEffect(() => {
         socket.connect();
+    });
 
+    useEffect(() => {
         if(currentUser) {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);

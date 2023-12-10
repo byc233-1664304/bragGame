@@ -24,7 +24,9 @@ export default function User() {
 
     useEffect(() => {
         socket.connect();
-        
+    }, []);
+
+    useEffect(() => {        
         if(currentUser) {
             const uid = currentUser.uid;
             const profilePicRef = ref(storage, 'profilePic/' + uid + '.jpg');

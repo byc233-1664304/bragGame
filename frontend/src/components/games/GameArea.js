@@ -19,7 +19,7 @@ export const GameArea = ({ roomId, users, host }) => {
         return () => {
             socket.off("roomData");
         };
-    });
+    }, []);
 
     const getRandomUser = () => {
         const userNum = users.length;
