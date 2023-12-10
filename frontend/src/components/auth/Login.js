@@ -30,7 +30,9 @@ export default function Login() {
         } catch(e) {
             setError(e.message);
         }finally{
-            window.location.reload();
+            if(!e) {
+                window.location.reload();
+            }
             setLoading(false);
         }
     }

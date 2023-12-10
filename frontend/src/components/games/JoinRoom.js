@@ -18,7 +18,7 @@ function JoinRoom() {
         navigate("/");
     }
 
-    const handleJoinRoom = () => {
+    const handleJoinRoom = async () => {
         if(userId === ""){
             setError("You must be logged in to join a room");
             return;
@@ -31,6 +31,18 @@ function JoinRoom() {
 
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
+
+        await new Promise(resolve => {
+            socket.on("roomData", (roomData) => {
+                if(roomData && roomData.inGame) {
+                    setInGame(true);
+                    setError("Game as already started in this room.")
+                }else if(roomData) {
+                    setInGame(false);
+                }
+                resolve();
+            });
+        });
 
         if(!inGame) {
             navigate("/room/" + roomId);
@@ -46,21 +58,6 @@ function JoinRoom() {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);
         }
-
-        socket.on("roomData", (roomData) => {
-            console.log(roomData);
-            if(roomData && roomData.inGame) {
-                setInGame(true);
-                setError("Game has already started in this room.");
-            } else if(roomData){
-                setInGame(false);
-            }
-        });
-
-        return () => {
-            socket.off("roomData");
-        };
-
     }, [currentUser, setError]);
 
     return (
