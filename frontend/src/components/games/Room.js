@@ -30,7 +30,6 @@ export default function Room() {
 
     useEffect(() => {
         socket.connect();
-        console.log("socket connected.");
 
         const handleRoomData = async (roomData) => {
             console.log("inside the handleRoomData");

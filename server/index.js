@@ -42,7 +42,11 @@ app.get('*', (req, res) => {
 //     }
 // });
 
-const server = http.createServer(app);
+const server = http.createServer(app).listen('0.0.0.0', function(err) {
+    if(err) {
+        console.log(err);
+    }
+});
 
 const io = socket(server);
 
