@@ -29,10 +29,9 @@ export default function Login() {
             socket.connect();
         } catch(e) {
             setError(e.message);
+            return;
         }finally{
-            if(!e) {
-                window.location.reload();
-            }
+            window.location.reload();
             setLoading(false);
         }
     }
