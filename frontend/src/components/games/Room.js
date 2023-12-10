@@ -28,62 +28,40 @@ export default function Room() {
     const userRef = useAutoScroll(userpics);
     const chatRef = useAutoScroll(messages);
 
-    // useEffect(() => {
-    //     // handle messages
-    //     const dispatchProcess = (encrypt, msg, cipher) => {
-    //         dispatch(process(encrypt, msg, cipher));
-    //     };
-
-    //     socket.on("message", (msgdata) => {
-    //         // decypt the message
-    //         const ans = to_Decrypt(msgdata.text, msgdata.isCipher);
-    //         dispatchProcess(false, ans, msgdata.text);
-
-    //         setMessages((prevMessages) => [
-    //             ...prevMessages,
-    //             {username: msgdata.username, text: ans}
-    //         ]);
-    //     });
-
-    //     // display users
-    //     socket.on("roomData", async (roomData) => {
-    //         console.log("roomData", roomData);
-    //         setHostId(roomData.hostId);
-    //         setInGame(roomData.inGame);
-
-    //         let tempPics = new Map();
-    //         let tempUsers = [];
-    //         await Promise.all(
-    //             roomData.users.map(async (user) => {
-    //                 const picRef = ref(storage, 'profilePic/' + user.userId + '.jpg');
-    //                 try{
-    //                     const url = await getDownloadURL(picRef);
-    //                     tempPics.set(user.userId, url);
-    //                     tempUsers.push(user);
-    //                 }catch (e) {
-    //                     console.log(e.message);
-    //                 }
-    //             })
-    //         );
-    //         setUserpics(tempPics);
-    //         setUsers(tempUsers);
-    //     });
-
-    //     return () => {
-    //         socket.off("message");
-    //         socket.off("roomData");
-    //     }
-    // }, [dispatch, messages, socket]);
-
     useEffect(() => {
         socket.connect();
+
+        const handleRoomData = async (roomData) => {
+            console.log("roomData", roomData);
+            setHostId(roomData.hostId);
+            setInGame(roomData.inGame);
+        
+            let tempPics = new Map();
+            let tempUsers = [];
+            await Promise.all(
+              roomData.users.map(async (user) => {
+                const picRef = ref(storage, 'profilePic/' + user.userId + '.jpg');
+                try {
+                  const url = await getDownloadURL(picRef);
+                  tempPics.set(user.userId, url);
+                  tempUsers.push(user);
+                } catch (e) {
+                  console.log(e.message);
+                }
+              })
+            );
+            setUserpics(tempPics);
+            setUsers(tempUsers);
+          };
+
+          socket.on("roomData", handleRoomData);
+
+          return () => {
+            socket.off("roomData", handleRoomData);
+          };
     }, []);
 
     useEffect(() => {
-        socket.on("close", (event) => {
-            console.error("WebSocket closed:", event);
-        });
-
         const dispatchProcess = (encrypt, msg, cipher) => {
           dispatch(process(encrypt, msg, cipher));
         };
@@ -98,35 +76,10 @@ export default function Room() {
           ]);
         };
       
-        const handleRoomData = async (roomData) => {
-          console.log("roomData", roomData);
-          setHostId(roomData.hostId);
-          setInGame(roomData.inGame);
-      
-          let tempPics = new Map();
-          let tempUsers = [];
-          await Promise.all(
-            roomData.users.map(async (user) => {
-              const picRef = ref(storage, 'profilePic/' + user.userId + '.jpg');
-              try {
-                const url = await getDownloadURL(picRef);
-                tempPics.set(user.userId, url);
-                tempUsers.push(user);
-              } catch (e) {
-                console.log(e.message);
-              }
-            })
-          );
-          setUserpics(tempPics);
-          setUsers(tempUsers);
-        };
-      
         socket.on("message", handleMessage);
-        socket.on("roomData", handleRoomData);
       
         return () => {
           socket.off("message", handleMessage);
-          socket.off("roomData", handleRoomData);
         };
       }, [dispatch]);      
 

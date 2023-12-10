@@ -55,13 +55,10 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", ({userId, roomId, username, isHost}) => {
         let roomData = getRoom(roomId);
 
-        //console.log("outterRoomData", roomData);
         if(roomData && roomData.inGame) {
-            //console.log("in if");
             socket.emit("roomData", roomData);
             return;
         }else {
-            //console.log("in else");
             // create user
             const curUser = join(socket.id, userId, roomId, username, isHost);
             socket.join(curUser.roomId);
