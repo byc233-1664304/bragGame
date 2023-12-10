@@ -41,10 +41,6 @@ function JoinRoom() {
             }
         }
         socket.on("roomData", handleRoomData);
-
-        return () => {
-            socket.off("roomData", handleRoomData);
-        };
     }
 
     useEffect(() => {
