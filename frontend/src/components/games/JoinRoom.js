@@ -10,7 +10,6 @@ function JoinRoom() {
     const [roomId, setRoomId] = useState("");
     const [userId, setUserId] = useState("");
     const [username, setUsername] = useState("");
-    const [inGame, setInGame] = useState(false);
 
     const { currentUser, setError } = useAuth();
 
@@ -32,31 +31,33 @@ function JoinRoom() {
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
 
+        let inGame = false;
         const roomData = await new Promise(resolve => {
             socket.on("roomData", (data) => {
+                inGame = data.inGame;
                 resolve(data);
             });
         });
 
-        if(roomData && roomData.inGame) {
-            setInGame(true);
+        if(inGame) {
             setError("Game as already started in this room.")
         }else if(roomData) {
-            setInGame(false);
             navigate("/room/" + roomId);
         }
     }
 
     useEffect(() => {
         socket.connect();
-
-        return () => {socket.disconnect();}
-    });
+    }, []);
 
     useEffect(() => {
         if(currentUser) {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);
+        }
+
+        return () => {
+            socket.off("roomData");
         }
     }, [currentUser, setError]);
 
