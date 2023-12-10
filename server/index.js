@@ -42,7 +42,7 @@ app.get('*', (req, res) => {
 //     }
 // });
 
-const server = http.createServer(app).listen('0.0.0.0', function(err) {
+const server = http.createServer(app).listen(process.env.PORT_NUMBER, '0.0.0.0', function(err) {
     if(err) {
         console.log(err);
     }
