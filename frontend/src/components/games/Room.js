@@ -78,6 +78,10 @@ export default function Room() {
     useEffect(() => {
         socket.connect();
 
+        socket.on("close", (event) => {
+            console.error("WebSocket closed:", event);
+        });
+
         const dispatchProcess = (encrypt, msg, cipher) => {
           dispatch(process(encrypt, msg, cipher));
         };
