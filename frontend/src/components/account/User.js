@@ -4,8 +4,9 @@ import { ref, getDownloadURL } from "firebase/storage";
 
 import { storage } from "../../config/firebase";
 import { useAuth } from "../../contexts/AuthContext";
+import { socket } from "../../services/socket";
 
-export default function User({generateRoomId, socket}) {
+export default function User() {
     const navigate = useNavigate();
 
     const [profileURL, setProfileURL] = useState("");
@@ -13,7 +14,17 @@ export default function User({generateRoomId, socket}) {
 
     const { currentUser, logout, setError } = useAuth();
 
+    const generateRoomId = () => {
+        let S4 = () => {
+          return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+    
+        return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() +S4();
+      }
+
     useEffect(() => {
+        socket.connect();
+        
         if(currentUser) {
             const uid = currentUser.uid;
             const profilePicRef = ref(storage, 'profilePic/' + uid + '.jpg');

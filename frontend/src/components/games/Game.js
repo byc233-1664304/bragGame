@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 
 import { useAuth } from "../../contexts/AuthContext";
 import { Dice } from "../layouts/Dice";
+import { socket } from "../../services/socket";
 
-export const Game = ({ socket, users, roomId, host }) => {
+export const Game = ({ users, roomId, host }) => {
     const [inTurn, setInTurn] = useState("");
     const [resultsForAll, setResultsForAll] = useState(new Map());
     const [resultsForAllArr, setResultsForAllArr] = useState([]);
@@ -23,6 +24,8 @@ export const Game = ({ socket, users, roomId, host }) => {
     const userIds = users.map(user => user.userId);
 
     useEffect(() => {
+        socket.connect();
+
         socket.on("game", (game) => {
             console.log("game", game);
             let tempRes = new Map();
@@ -61,9 +64,9 @@ export const Game = ({ socket, users, roomId, host }) => {
 
         return () => {
             socket.off("game");
-            socket.off("calle");
+            socket.off("called");
         };
-    }, [currentUser.uid, socket]);
+    }, [currentUser.uid]);
 
     const handleResCalling = (res) => {
         setCurCallRes(res);

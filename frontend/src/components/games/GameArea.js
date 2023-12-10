@@ -2,16 +2,23 @@ import { useState, useEffect } from "react";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { Game } from "./Game";
+import { socket } from "../../services/socket";
 
-export const GameArea = ({ socket, roomId, users, host }) => {
+export const GameArea = ({ roomId, users, host }) => {
     const [inGame, setInGame] = useState(false);
 
     const { currentUser, setError } = useAuth();
 
     useEffect(() => {
+        socket.connect();
+
         socket.on("roomData", (roomData) => {
             setInGame(roomData.inGame);
         });
+
+        return () => {
+            socket.off("roomData");
+        };
     });
 
     const getRandomUser = () => {
@@ -48,7 +55,7 @@ export const GameArea = ({ socket, roomId, users, host }) => {
         }
     }else {
         return (
-            <div><Game socket={socket} users={users} roomId={roomId} host={host} /></div>
+            <div><Game users={users} roomId={roomId} host={host} /></div>
         );
     }
 }

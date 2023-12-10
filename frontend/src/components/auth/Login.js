@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import { socket } from "../../services/socket"
 
-export default function Login(socket) {
+export default function Login() {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export default function Login(socket) {
 
     useEffect(() => {
         if(currentUser) {
+            socket.connect();
             navigate("/");
         }
     }, [currentUser, navigate]);

@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 import { useAuth } from "../../contexts/AuthContext";
+import { socket } from "../../services/socket";
 
-function JoinRoom({ socket }) {
+function JoinRoom() {
     const navigate = useNavigate();
 
     const [roomId, setRoomId] = useState("");
     const [userId, setUserId] = useState("");
     const [username, setUsername] = useState("");
+    const [inGame, setInGame] = useState(false);
 
     const { currentUser, setError } = useAuth();
 
@@ -30,28 +31,35 @@ function JoinRoom({ socket }) {
 
         const isHost = false;
         socket.emit("joinRoom", { userId, roomId, username, isHost });
-        navigate("/room/" + roomId);
 
-        // socket.on("roomData", (roomData) => {
-        //     console.log(roomData);
-        //     if(roomData && roomData.inGame) {
-        //         setError("Game has already started in this room.");
-        //     } else if(roomData){
-        //         navigate("/room/" + roomId);
-        //     }
-        // });
-
-        // return () => {
-        //     socket.off("roomData");
-        // };
+        if(!inGame) {
+            navigate("/room/" + roomId);
+        }
     }
 
     useEffect(() => {
+        socket.connect();
+
         if(currentUser) {
             setUserId(currentUser.uid);
             setUsername(currentUser.displayName);
         }
-    }, [currentUser]);
+
+        socket.on("roomData", (roomData) => {
+            console.log(roomData);
+            if(roomData && roomData.inGame) {
+                setInGame(true);
+                setError("Game has already started in this room.");
+            } else if(roomData){
+                setInGame(false);
+            }
+        });
+
+        return () => {
+            socket.off("roomData");
+        };
+
+    }, [currentUser, setError]);
 
     return (
         <div>

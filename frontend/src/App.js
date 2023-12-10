@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useEffect } from "react";
-import io from "socket.io-client";
+import React from "react";
 
 import './index.css';
 import { AuthProvider } from "./contexts/AuthContext";
@@ -14,19 +13,7 @@ import Background from "./components/layouts/Background";
 import ErrorMessage from "./components/layouts/ErrorMessage";
 import WithPrivateRoute from "./utils/WithPrivateRoute";
 
-const socket = io("https://braggame-api.onrender.com", {
-  transports: ['websocket']
-});
-
 function App() {
-  const generateRoomId = () => {
-    let S4 = () => {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    }
-
-    return S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() +S4();
-  }
-
   return (
     <AuthProvider>
       <Router>
@@ -34,25 +21,25 @@ function App() {
         <ErrorMessage />
         <Routes>
           <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login socket={socket}/>} />
+          <Route exact path="/login" element={<Login />} />
           <Route exact path="/profile" element={
             <WithPrivateRoute>
-              <Profile  socket={socket}/>
+              <Profile />
             </WithPrivateRoute>
           } />
           <Route exact path="/" element={
             <WithPrivateRoute>
-              <User generateRoomId={generateRoomId} socket={socket}/>
+              <User />
             </WithPrivateRoute>
           } />
           <Route exact path="/join" element={
             <WithPrivateRoute>
-              <JoinRoom socket={socket}/>
+              <JoinRoom />
             </WithPrivateRoute>
           } />
           <Route path="room/:roomId" element={
             <WithPrivateRoute>
-              <Room socket={socket} />
+              <Room />
             </WithPrivateRoute>
           }/>
         </Routes>

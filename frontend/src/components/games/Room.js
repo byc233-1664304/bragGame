@@ -10,8 +10,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useAutoScroll } from "../../utils/autoScroll";
 import { storage } from "../../config/firebase";
 import { GameArea } from "./GameArea";
+import { socket } from "../../services/socket";
 
-export default function Room({ socket }) {
+export default function Room() {
     const navigate = useNavigate();
 
     const [text, setText] = useState("");
@@ -75,6 +76,8 @@ export default function Room({ socket }) {
     // }, [dispatch, messages, socket]);
 
     useEffect(() => {
+        socket.connect();
+
         const dispatchProcess = (encrypt, msg, cipher) => {
           dispatch(process(encrypt, msg, cipher));
         };
@@ -119,7 +122,7 @@ export default function Room({ socket }) {
           socket.off("message", handleMessage);
           socket.off("roomData", handleRoomData);
         };
-      }, [dispatch, socket]);      
+      }, [dispatch]);      
 
     const sendData = () => {
         if(text !== "") {
@@ -135,10 +138,6 @@ export default function Room({ socket }) {
     }
 
     const leaveRoom = () => {
-        socket.on("roomData", (roomData) => {
-            setInGame(roomData.inGame);
-        }); 
-
         if(inGame) {
             setError("Game in process, please do not leave.");
         }else {
@@ -171,7 +170,7 @@ export default function Room({ socket }) {
             </div>
 
             <div>
-                <GameArea socket={socket} roomId={roomId} users={users} host={hostId} />
+                <GameArea roomId={roomId} users={users} host={hostId} />
             </div>
 
             <div id="chatBox">
