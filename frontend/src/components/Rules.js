@@ -1,4 +1,8 @@
 export default function Rules() {
+    const handleBack = () => {
+        navigate("/");
+    }
+    
     return (
         <div className="rulesDiv">
             <button className="backbutton" onClick={handleBack}>Back</button>
