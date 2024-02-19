@@ -4,7 +4,7 @@ export default function Rules() {
     return (
         <div className="rulesDiv">
             <div className="backbutton"><Link to="/">Back</Link></div>
-            <h1 align="center" className="ruleTexts">Rules of the Brag Game</h1>
+            <h1 className="ruleTexts">Rules of the Brag Game</h1>
 
             <ul className="ruleTexts">
                 <li>There must be at least two players in the room to start the game.</li>
