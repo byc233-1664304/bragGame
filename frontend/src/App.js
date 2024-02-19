@@ -22,6 +22,7 @@ function App() {
         <Routes>
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/rules" element={<Rules />}/>
           <Route exact path="/profile" element={
             <WithPrivateRoute>
               <Profile />

@@ -525,4 +525,13 @@
         color: #6C6076;
         text-align: center;
     }
+
+    .rulesDiv > h1{
+        margin-top: 10rem;
+    }
+
+    .ruleTexts{
+        font-family: sans-serif;
+        color: #6C6076;
+    }
 }

@@ -38,6 +38,7 @@ export default function Login() {
 
     return (
         <div>
+            <div className="backbutton"><Link to="/rules">Rules</Link></div>
             <div className="authbox">
                 <h2>Brag Game</h2>
 
