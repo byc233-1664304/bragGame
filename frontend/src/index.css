@@ -531,6 +531,7 @@
         top: 5rem;
         left: 5rem;
         margin-right: 5rem;
+        margin-bottom: 5rem;
         font-family: sans-serif;
         color: #6C6076;
     }
@@ -540,6 +541,14 @@
         font-size: xx-large;
         font-weight: bold;
         margin-bottom: 2rem;
+    }
+
+    .rulesDiv > ul {
+        list-style-type: circle;
+    }
+
+    .rulesDiv > ul > li > ol {
+        list-style-type: disc;
     }
 
     .rulesDiv > h3{
