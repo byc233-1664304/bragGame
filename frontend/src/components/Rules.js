@@ -1,11 +1,7 @@
-export default function Rules() {
-    const handleBack = () => {
-        navigate("/");
-    }
-    
+export default function Rules() {  
     return (
         <div className="rulesDiv">
-            <button className="backbutton" onClick={handleBack}>Back</button>
+            <div className="backbutton"><Link to="/">Back</Link></div>
             <h1 align="center" className="ruleTexts">Rules of the Brag Game</h1>
 
             <ul className="ruleTexts">
