@@ -5,6 +5,7 @@ import './index.css';
 import { AuthProvider } from "./contexts/AuthContext";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Rules from "./components/Rules";
 import User from "./components/account/User";
 import Profile from "./components/account/Profile";
 import Room from "./components/games/Room";
