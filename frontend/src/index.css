@@ -544,11 +544,12 @@
     }
 
     .rulesDiv > ul {
-        list-style-type: circle;
+        list-style-type: disc;
     }
 
     .rulesDiv > ul > li > ol {
-        list-style-type: disc;
+        margin-left: 2rem;
+        list-style-type: decimal;
     }
 
     .rulesDiv > h3{
